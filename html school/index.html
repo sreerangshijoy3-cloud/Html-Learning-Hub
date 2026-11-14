@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeCraft - Interactive HTML, CSS & Java Learning Studio</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+  <!-- Top Application Bar -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <div class="logo-text">
+          <span class="logo-title">CodeCraft</span>
+          <span class="logo-subtitle">HTML • CSS • Java Studio</span>
+        </div>
+      </div>
+
+      <nav class="main-tabs" role="tablist">
+        <button class="nav-tab active" data-tab="web-playground" role="tab" id="tab-web">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          Web Preview (HTML/CSS)
+        </button>
+        <button class="nav-tab" data-tab="java-playground" role="tab" id="tab-java">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          Java Simulator
+        </button>
+        <button class="nav-tab" data-tab="lessons-view" role="tab" id="tab-lessons">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Interactive Lessons
+          <span class="badge-count" id="lesson-progress-badge">0/13</span>
+        </button>
+        <button class="nav-tab" data-tab="cheatsheet-view" role="tab" id="tab-cheatsheet">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Cheat Sheet
+        </button>
+      </nav>
+    </div>
+
+    <div class="header-right">
+      <div class="template-selector-wrap">
+        <label for="template-select" class="sr-only">Templates</label>
+        <select id="template-select" class="custom-select">
+          <option value="" disabled selected>✨ Starter Templates</option>
+          <option value="landing">1. Modern Hero Landing</option>
+          <option value="profile-card">2. Glassmorphism Profile Card</option>
+          <option value="todo-app">3. Interactive To-Do List</option>
+          <option value="flex-pricing">4. CSS Flexbox Pricing Grid</option>
+          <option value="neon-button">5. Animated Neon Buttons</option>
+        </select>
+      </div>
+
+      <button id="theme-toggle" class="icon-btn" title="Toggle Light / Dark Mode">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Workspaces Container -->
+  <main class="app-workspace">
+    <!-- ============================================== -->
+    <!-- VIEW 1: WEB PLAYGROUND (HTML + CSS + LIVE PREVIEW) -->
+    <!-- ============================================== -->
+    <section id="web-playground" class="tab-content active">
+      <div class="split-layout">
+        <!-- Left: Code Editors -->
+        <div class="editor-pane">
+          <div class="editor-nav-bar">
+            <div class="editor-tabs">
+              <button class="editor-subtab active" data-lang="html">
+                <span class="lang-dot html-dot"></span> HTML
+              </button>
+              <button class="editor-subtab" data-lang="css">
+                <span class="lang-dot css-dot"></span> CSS
+              </button>
+              <button class="editor-subtab" data-lang="js">
+                <span class="lang-dot js-dot"></span> JavaScript
+              </button>
+            </div>
+
+            <div class="editor-actions">
+              <label class="auto-run-toggle">
+                <input type="checkbox" id="auto-run-check" checked>
+                <span>Live Update</span>
+              </label>
+              <button id="run-web-btn" class="btn btn-primary" title="Trigger manual preview run">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Run Code
+              </button>
+              <button id="reset-web-btn" class="btn btn-ghost" title="Reset editors">
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- HTML Editor -->
+          <div class="code-box active" id="code-box-html">
+            <div class="line-numbers" id="lines-html"></div>
+            <textarea id="editor-html" class="code-textarea" spellcheck="false" placeholder="Write HTML here..."></textarea>
+          </div>
+
+          <!-- CSS Editor -->
+          <div class="code-box" id="code-box-css">
+            <div class="line-numbers" id="lines-css"></div>
+            <textarea id="editor-css" class="code-textarea" spellcheck="false" placeholder="Write CSS styling here..."></textarea>
+          </div>
+
+          <!-- JS Editor -->
+          <div class="code-box" id="code-box-js">
+            <div class="line-numbers" id="lines-js"></div>
+            <textarea id="editor-js" class="code-textarea" spellcheck="false" placeholder="Write JavaScript behavior here..."></textarea>
+          </div>
+
+          <div class="editor-footer">
+            <span id="editor-cursor-pos">Line 1, Col 1</span>
+            <span class="keyboard-tip">💡 Tip: Press Tab inside editor to indent</span>
+          </div>
+        </div>
+
+        <!-- Right: Live Preview & Console Output -->
+        <div class="preview-pane">
+          <div class="preview-header">
+            <div class="preview-title-group">
+              <span class="live-indicator"></span>
+              <h3>Inbuilt Live Preview</h3>
+            </div>
+
+            <div class="preview-controls">
+              <div class="viewport-presets">
+                <button class="viewport-btn active" data-width="100%" title="Responsive / Full Width">Desktop</button>
+                <button class="viewport-btn" data-width="768px" title="Tablet view (768px)">Tablet</button>
+                <button class="viewport-btn" data-width="375px" title="Mobile view (375px)">Mobile</button>
+              </div>
+
+              <button id="open-window-btn" class="icon-btn-small" title="Open preview in new tab">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Preview Frame Wrapper -->
+          <div class="preview-frame-container">
+            <iframe id="live-preview-frame" sandbox="allow-scripts allow-modals" title="Live Preview"></iframe>
+          </div>
+
+          <!-- Bottom Console Output Drawer -->
+          <div class="console-drawer" id="console-drawer">
+            <div class="console-drawer-header">
+              <div class="console-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                <span>Console Log</span>
+                <span class="console-counter" id="console-count">0</span>
+              </div>
+              <div class="console-actions">
+                <button id="clear-console-btn" class="btn-micro">Clear</button>
+                <button id="toggle-console-btn" class="btn-micro" title="Collapse/Expand">▼</button>
+              </div>
+            </div>
+            <div class="console-logs" id="console-logs">
+              <div class="console-msg console-system">Console initialized. JavaScript log output will appear here.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- VIEW 2: JAVA PLAYGROUND (COMPILER & RUNNER)   -->
+    <!-- ============================================== -->
+    <section id="java-playground" class="tab-content">
+      <div class="split-layout">
+        <!-- Java Code Editor -->
+        <div class="editor-pane">
+          <div class="editor-nav-bar">
+            <div class="editor-header-title">
+              <span class="java-tag">Java 21</span>
+              <span>Main.java</span>
+            </div>
+
+            <div class="editor-actions">
+              <select id="java-example-select" class="custom-select-small">
+                <option value="hello">1. Hello World & System.out</option>
+                <option value="types">2. Variables, Math & Decimals</option>
+                <option value="decision">3. If-Else Decisions</option>
+                <option value="loops">4. Loops & Pattern Pyramids</option>
+                <option value="methods">5. Custom Functions (Prime check)</option>
+                <option value="oop">6. OOP Classes & Objects (RPG Hero)</option>
+              </select>
+
+              <button id="run-java-btn" class="btn btn-java">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Run Java
+              </button>
+              <button id="reset-java-btn" class="btn btn-ghost">Reset</button>
+            </div>
+          </div>
+
+          <div class="code-box active" id="code-box-java">
+            <div class="line-numbers" id="lines-java"></div>
+            <textarea id="editor-java" class="code-textarea" spellcheck="false" placeholder="Write Java code here..."></textarea>
+          </div>
+
+          <div class="editor-footer">
+            <span id="java-cursor-pos">Line 1, Col 1</span>
+            <span class="keyboard-tip">⚡ Executes inside client-side Java Virtual Engine</span>
+          </div>
+        </div>
+
+        <!-- Java Inbuilt Terminal & Output Preview -->
+        <div class="terminal-pane">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <div class="terminal-title">bash &mdash; javac Main.java && java Main</div>
+            <div class="terminal-badge" id="java-exec-badge">Ready</div>
+          </div>
+
+          <div class="terminal-body" id="java-terminal-body">
+            <div class="term-line term-prompt">$ javac Main.java && java Main</div>
+            <div class="term-output" id="java-output-text">Click "Run Java" to execute the code above and preview standard output!</div>
+          </div>
+
+          <!-- Java Quick Concept Cards -->
+          <div class="java-concept-cards">
+            <div class="concept-card">
+              <h4>☕ Java Key Rules</h4>
+              <p>Every statement ends with a <code>;</code>. Code lives inside <code>class</code> definitions and begins at <code>public static void main(String[] args)</code>.</p>
+            </div>
+            <div class="concept-card">
+              <h4>🖨️ Printing to Output</h4>
+              <p>Use <code>System.out.println("text")</code> for full lines, and <code>System.out.print()</code> for continuous output.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- VIEW 3: INTERACTIVE LESSONS & COURSES          -->
+    <!-- ============================================== -->
+    <section id="lessons-view" class="tab-content">
+      <div class="lessons-container">
+        <!-- Lessons Sidebar -->
+        <aside class="lessons-sidebar">
+          <div class="sidebar-header">
+            <h3>Course Curriculum</h3>
+            <p>Select a lesson to study and practice</p>
+          </div>
+
+          <div class="course-track-tabs">
+            <button class="track-btn active" data-track="html">HTML5</button>
+            <button class="track-btn" data-track="css">CSS3</button>
+            <button class="track-btn" data-track="java">Java</button>
+            <button class="track-btn" data-track="javascript">JS</button>
+          </div>
+
+          <ul class="lesson-list" id="lesson-list-items">
+            <!-- Populated via JavaScript -->
+          </ul>
+        </aside>
+
+        <!-- Lesson Reader Pane -->
+        <main class="lesson-reader" id="lesson-reader-pane">
+          <!-- Populated dynamically -->
+        </main>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- VIEW 4: CHEAT SHEETS & QUICK LOOKUP            -->
+    <!-- ============================================== -->
+    <section id="cheatsheet-view" class="tab-content">
+      <div class="cheatsheet-container">
+        <div class="cheatsheet-header">
+          <h2>Developer Quick Reference & Cheat Sheet</h2>
+          <p>Quick syntax reminders for HTML tags, CSS styling properties, and Java fundamentals.</p>
+          <input type="text" id="cheatsheet-search" placeholder="🔍 Search tags, properties, keywords (e.g. flexbox, loop, button, form)..." class="search-input">
+        </div>
+
+        <div class="cheatsheet-grid" id="cheatsheet-grid">
+          <!-- HTML Card -->
+          <div class="cheat-card" data-keywords="html tags structure div span p h1 img form table">
+            <div class="cheat-header html-bg">HTML5 Essentials</div>
+            <div class="cheat-body">
+              <div class="cheat-item"><code>&lt;h1&gt;..&lt;h6&gt;</code><span>Headings (h1 is primary)</span></div>
+              <div class="cheat-item"><code>&lt;p&gt;...&lt;/p&gt;</code><span>Paragraph container</span></div>
+              <div class="cheat-item"><code>&lt;a href="..."&gt;</code><span>Hyperlink with destination</span></div>
+              <div class="cheat-item"><code>&lt;img src="..." alt=""&gt;</code><span>Image embed (self closing)</span></div>
+              <div class="cheat-item"><code>&lt;div&gt;, &lt;span&gt;</code><span>Block and inline containers</span></div>
+              <div class="cheat-item"><code>&lt;form&gt;, &lt;input&gt;</code><span>User input controls</span></div>
+              <div class="cheat-item"><code>&lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;</code><span>Bullet and numbered lists</span></div>
+            </div>
+          </div>
+
+          <!-- CSS Card -->
+          <div class="cheat-card" data-keywords="css styling flexbox grid layout margin padding border color font">
+            <div class="cheat-header css-bg">CSS3 Styling & Layouts</div>
+            <div class="cheat-body">
+              <div class="cheat-item"><code>display: flex;</code><span>Flexible box container</span></div>
+              <div class="cheat-item"><code>justify-content: center;</code><span>Aligns items on main axis</span></div>
+              <div class="cheat-item"><code>align-items: center;</code><span>Aligns items on cross axis</span></div>
+              <div class="cheat-item"><code>display: grid;</code><span>2D Grid with template columns</span></div>
+              <div class="cheat-item"><code>gap: 16px;</code><span>Spacing between grid/flex items</span></div>
+              <div class="cheat-item"><code>box-shadow: 0 4px 12px;</code><span>Element depth shadow</span></div>
+              <div class="cheat-item"><code>transition: all 0.2s ease;</code><span>Smooth state transitions</span></div>
+            </div>
+          </div>
+
+          <!-- Java Card -->
+          <div class="cheat-card" data-keywords="java class object types int double boolean loop if methods">
+            <div class="cheat-header java-bg">Java Core Fundamentals</div>
+            <div class="cheat-body">
+              <div class="cheat-item"><code>int, double, boolean</code><span>Primitive data types</span></div>
+              <div class="cheat-item"><code>String str = "Hello";</code><span>Reference text string</span></div>
+              <div class="cheat-item"><code>System.out.println()</code><span>Print with new line</span></div>
+              <div class="cheat-item"><code>for (int i=0; i&lt;n; i++)</code><span>Standard for counter loop</span></div>
+              <div class="cheat-item"><code>if (cond) { } else { }</code><span>Conditional branch</span></div>
+              <div class="cheat-item"><code>public static void main</code><span>Application entry point</span></div>
+              <div class="cheat-item"><code>class Dog { ... }</code><span>Object blueprint definition</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- External & Internal Scripts -->
+  <script src="lessons-data.js"></script>
+  <script src="java-runner.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
